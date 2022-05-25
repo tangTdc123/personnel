@@ -363,6 +363,7 @@ export default {
                //除第一页的其他某页全都删除了的情况：
                that.page.current =  that.page.current - 1;
                that.personnelList = res.data.data;
+               this.pageInation();
 
             }else{
                 that.personnelList = res.data.data;
@@ -381,8 +382,9 @@ export default {
         //每次点击更改页码值
         this.$http.get('personnelList?currentPage='+that.page.current+'&pageSize='+that.page.size).then(res=>{
         
-            if(res.data.data == null || res.data.data.length == 0){
+            if(res.data.data == null || res.data.data.length == 1){
                //除第一页的其他某页全都删除了的情况：
+               
                that.page.current =  that.page.current - 1;
                that.pageInation();
             }else{
