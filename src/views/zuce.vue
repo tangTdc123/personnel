@@ -69,7 +69,7 @@
             
           console.log(this.zuce);
             
-          this.$http.post('users',this.zuce).then(res=>{
+          this.$http.post('user/register',this.zuce).then(res=>{
           //清空录入框信息：
           
           //隐藏录入框：

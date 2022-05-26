@@ -13,12 +13,19 @@ Vue.config.productionTip = false
 import axios from 'axios'
 
 
-
-
 Vue.prototype.$http = axios.create({
-  baseURL:'http://127.0.0.1:3001/api/'
+  baseURL:'http://127.0.0.1:3001/'
   
 })
+
+Vue.prototype.$http.interceptors.request.use((config)=>{
+  if(localStorage.getItem('token')){
+      config.headers.Authorization = localStorage.getItem('token')
+  }
+  return config
+})
+
+
 
 
 Vue.use(ElementUI)

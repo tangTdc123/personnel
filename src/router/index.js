@@ -33,4 +33,25 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to,from,next)=>{
+    if(to.path == '/' || to.path == '/zuce'){
+      next()
+    }else{
+
+        Vue.prototype.$http.get('/api/istoken').then((result) => {
+          if(result.data.code == 200){
+            next()
+          }
+        }).catch(() => {
+          Vue.prototype.$message({type:"error",message:"你还未登录"})
+          next('/')
+        });
+
+    }
+
+
+
+
+})
+
 export default router

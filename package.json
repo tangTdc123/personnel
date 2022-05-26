@@ -14,9 +14,13 @@
     "cors": "^2.8.5",
     "element-ui": "^2.15.6",
     "express": "^5.0.0-alpha.8",
+    "express-jwt": "^5.3.3",
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
+    "jwt-express": "^1.1.0",
+    "lodash": "^4.17.21",
     "mongoose": "^6.3.4",
+    "nodemon": "^2.0.16",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0"
   },

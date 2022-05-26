@@ -1,12 +1,25 @@
 const express = require('express')
-// const jwt = require('jsonwebtoken')
+
 const app = express()
 const mongoose = require('mongoose')
 app.use(require('cors')())
 app.use(express.json())
 
-app.get('/', async (req, res) => {
-    res.send('a')
+const expressJWT = require("express-jwt");
+const jwt = require('jsonwebtoken')
+
+const config = require('../config')
+
+
+app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/user\//] }))
+
+app.use('/api',expressJWT({ secret: config.jwtSecretKey }))
+
+
+app.get('/api/istoken', async (req, res) => {
+    res.send({
+        code:200
+    })
 })
 
 //显示学生列表：
@@ -105,7 +118,7 @@ app.all('/api/personnelList', async (req, res) => {
 
 })
 //注册
-app.post('/api/users', async (req, res) => {
+app.post('/user/register', async (req, res) => {
 
     if (req.body.rootpassword == '1234') {
 
@@ -124,9 +137,15 @@ app.post('/api/users', async (req, res) => {
 
 })
 //登录
-app.get('/api/findBySname/:sname', async (req, res) => {
-    const user = await User.find({ 'name': req.params.sname })
-    res.send(user)
+app.post('/user/login', async (req, res) => {
+    const user = await User.find({ 'name': req.body.name })
+    const tokenStr =jwt.sign({...user[0]},config.jwtSecretKey,{
+        expiresIn:'10h'
+    })
+    res.send({
+        code:200,
+        token:'Bearer '+tokenStr
+    })
 
 })
 
